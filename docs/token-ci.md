@@ -60,7 +60,7 @@ Repos que lo tienen:
 | `melomango` | 2026-11-25 |
 | `melomango-mobile` | 2026-11-25 |
 
-Token actual creado el 2026-11-25. Si se creó con la caducidad máxima, caduca hacia el 2027-11-26.
+Token actual creado el 2026-11-25. **Caduca el 2026-12-25** (30 días): hay que rotarlo antes. El siguiente, mejor con 366 días.
 
 En los repos públicos (`melomango`), los secrets no llegan a los workflows de pull requests desde forks. Aun así, el workflow de publicación solo debe correr con tags `v*` (KAN-200).
 

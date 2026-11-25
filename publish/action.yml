@@ -1,0 +1,88 @@
+name: Publicar en apps
+description: >
+  Publica una versión de una app en fergaschas/apps: renombra los archivos según la
+  convención, genera y valida el manifest.json y crea la release (borrador primero,
+  publicada al final). La web se regenera sola con release.yml.
+
+inputs:
+  token:
+    description: Token con permiso de escritura en el repo apps (secret APPS_REPO_TOKEN).
+    required: true
+  app:
+    description: Id de la app en catalog.json (p. ej. melomango).
+    required: true
+  version:
+    description: Versión SemVer, sin "v" (p. ej. 0.15.0 o 0.15.0-beta.1).
+    required: true
+  tag:
+    description: Tag en el repo apps. Por defecto <app>-v<versión>; para una plataforma con versión propia, <app>-<plataforma>-v<versión>.
+    required: false
+    default: ""
+  title:
+    description: Título de la release. Por defecto "<App> <versión>".
+    required: false
+    default: ""
+  notes-file:
+    description: Archivo con las notas de la versión (Markdown, públicas).
+    required: true
+  assets:
+    description: Un archivo por línea, "<plataforma> <arch> <ruta>". Si existe <ruta>.sig, se usa como firma del actualizador de Tauri.
+    required: true
+  version-code:
+    description: versionCode de Android (obligatorio con un APK).
+    required: false
+    default: ""
+  min-sdk:
+    description: minSdk de Android (obligatorio con un APK).
+    required: false
+    default: ""
+  min-os:
+    description: Una por línea, "<plataforma>=<versión mínima>" (p. ej. windows=10).
+    required: false
+    default: ""
+  dry-run:
+    description: "true para prepararlo y validarlo todo sin publicar."
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 24
+
+    - name: Dependencias del catálogo
+      shell: bash
+      run: npm ci --prefix "$GITHUB_ACTION_PATH/.." --omit=dev --no-audit --no-fund
+
+    - name: Publicar
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        APP: ${{ inputs.app }}
+        VERSION: ${{ inputs.version }}
+        TAG: ${{ inputs.tag }}
+        TITLE: ${{ inputs.title }}
+        NOTES_FILE: ${{ inputs.notes-file }}
+        ASSETS: ${{ inputs.assets }}
+        VERSION_CODE: ${{ inputs.version-code }}
+        MIN_SDK: ${{ inputs.min-sdk }}
+        MIN_OS: ${{ inputs.min-os }}
+        DRY_RUN: ${{ inputs.dry-run }}
+      run: |
+        args=(--app "$APP" --version "$VERSION" --notes-file "$NOTES_FILE" --out "$RUNNER_TEMP/publicar")
+        [ -n "$TAG" ] && args+=(--tag "$TAG")
+        [ -n "$TITLE" ] && args+=(--title "$TITLE")
+        [ -n "$VERSION_CODE" ] && args+=(--version-code "$VERSION_CODE")
+        [ -n "$MIN_SDK" ] && args+=(--min-sdk "$MIN_SDK")
+        [ "$DRY_RUN" = "true" ] && args+=(--dry-run)
+        while IFS= read -r line; do
+          line="${line%$'\r'}"
+          [ -n "${line// }" ] && args+=(--asset "$line")
+        done <<< "$ASSETS"
+        while IFS= read -r line; do
+          line="${line%$'\r'}"
+          [ -n "${line// }" ] && args+=(--min-os "$line")
+        done <<< "$MIN_OS"
+        node "$GITHUB_ACTION_PATH/../scripts/publish-release.mjs" "${args[@]}"
