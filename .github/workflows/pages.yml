@@ -63,5 +63,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # deploy-pages usa GITHUB_SHA como versión del despliegue, y Pages no cambia el
+      # contenido si la versión se repite. Una release no crea commit, así que sin esto
+      # la web se quedaba con el catálogo anterior. Se añade el id de la ejecución.
       - id: deployment
         uses: actions/deploy-pages@v5
+        env:
+          GITHUB_SHA: ${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
