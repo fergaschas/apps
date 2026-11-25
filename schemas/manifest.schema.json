@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fergaschas.github.io/apps/schemas/manifest.schema.json",
+  "title": "manifest.json",
+  "description": "Metadatos de una release. Lo genera la CI de cada app y lo sube a la release junto a los instaladores. Todo lo que contiene es público.",
+  "type": "object",
+  "required": ["schemaVersion", "app", "version", "tag", "prerelease", "date", "notes", "platforms"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "app": { "$ref": "#/$defs/appId" },
+    "version": { "$ref": "#/$defs/semver" },
+    "tag": { "$ref": "#/$defs/tag" },
+    "prerelease": { "$ref": "#/$defs/prerelease" },
+    "date": { "$ref": "#/$defs/date" },
+    "notes": { "$ref": "#/$defs/notes" },
+    "platforms": {
+      "description": "Plataformas que trae esta release. Cada plataforma puede publicarse en releases distintas, con su propia versión.",
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "android": {
+          "$ref": "#/$defs/android",
+          "properties": { "assets": { "items": { "$ref": "#/$defs/asset" } } },
+          "unevaluatedProperties": false
+        },
+        "windows": {
+          "$ref": "#/$defs/desktop",
+          "properties": { "assets": { "items": { "$ref": "#/$defs/asset", "properties": { "type": { "enum": ["exe", "msi"] } } } } },
+          "unevaluatedProperties": false
+        },
+        "macos": {
+          "$ref": "#/$defs/desktop",
+          "properties": { "assets": { "items": { "$ref": "#/$defs/asset", "properties": { "type": { "enum": ["dmg", "app.tar.gz"] } } } } },
+          "unevaluatedProperties": false
+        },
+        "linux": {
+          "$ref": "#/$defs/desktop",
+          "properties": { "assets": { "items": { "$ref": "#/$defs/asset", "properties": { "type": { "enum": ["AppImage", "deb"] } } } } },
+          "unevaluatedProperties": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "appId": {
+      "description": "Identificador de la app: minúsculas, números y guiones.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
+    },
+    "tag": {
+      "description": "Tag de la release en el repo apps: <app>-v<versión>, o <app>-<plataforma>-v<versión> si esa plataforma se versiona aparte.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*-v(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z-]+(\\.[0-9A-Za-z-]+)*)?$"
+    },
+    "prerelease": { "description": "true en las betas: no cuentan como última versión estable.", "type": "boolean" },
+    "date": { "description": "Fecha de publicación (ISO 8601, UTC).", "type": "string", "format": "date-time" },
+    "notes": { "description": "Changelog breve en Markdown, pensado para ser público.", "type": "string", "minLength": 1, "maxLength": 10000 },
+    "android": {
+      "type": "object",
+      "required": ["versionCode", "minSdk", "assets"],
+      "properties": {
+        "versionCode": { "description": "versionCode de Android: es lo que compara el actualizador.", "type": "integer", "minimum": 1 },
+        "minSdk": { "description": "API mínima de Android (26 = Android 8.0).", "type": "integer", "minimum": 1 },
+        "assets": { "type": "array", "minItems": 1, "items": { "properties": { "type": { "const": "apk" } } } }
+      }
+    },
+    "desktop": {
+      "type": "object",
+      "required": ["assets"],
+      "properties": {
+        "minOsVersion": { "description": "Versión mínima del sistema (p. ej. \"10\" en Windows, \"10.15\" en macOS).", "type": "string", "minLength": 1 },
+        "assets": { "type": "array", "minItems": 1 }
+      }
+    },
+    "assetFields": {
+      "type": "object",
+      "required": ["file", "arch", "type", "size", "sha256"],
+      "properties": {
+        "file": {
+          "description": "Nombre del archivo en la release: <app>-<versión>-<plataforma>[-<arch>].<ext> (en Android, sin arch).",
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]*\\.(apk|exe|msi|dmg|app\\.tar\\.gz|AppImage|deb)$"
+        },
+        "arch": { "type": "string", "enum": ["x64", "arm64", "universal"] },
+        "type": { "type": "string", "enum": ["apk", "exe", "msi", "dmg", "app.tar.gz", "AppImage", "deb"] },
+        "size": { "description": "Tamaño en bytes.", "type": "integer", "minimum": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "download": {
+          "description": "false si solo lo usa el actualizador y la web no debe ofrecerlo (p. ej. el .app.tar.gz de macOS). Por defecto, true.",
+          "type": "boolean"
+        },
+        "updater": {
+          "description": "Firma del actualizador de Tauri (el contenido del .sig). Solo en los paquetes que puede instalar el actualizador.",
+          "type": "object",
+          "required": ["signature"],
+          "additionalProperties": false,
+          "properties": { "signature": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "asset": { "$ref": "#/$defs/assetFields", "unevaluatedProperties": false }
+  }
+}

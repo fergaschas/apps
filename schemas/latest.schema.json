@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fergaschas.github.io/apps/schemas/latest.schema.json",
+  "title": "<app>/latest.json",
+  "description": "Última versión estable de cada plataforma de una app. Lo genera el workflow del repo apps a partir de los manifest.json; lo leen la web y los actualizadores de Android.",
+  "type": "object",
+  "required": ["schemaVersion", "app", "generated", "platforms"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "app": { "$ref": "manifest.schema.json#/$defs/appId" },
+    "generated": { "description": "Cuándo se generó el catálogo.", "type": "string", "format": "date-time" },
+    "platforms": { "$ref": "#/$defs/platforms" }
+  },
+  "$defs": {
+    "platforms": {
+      "description": "Solo aparecen las plataformas que tienen al menos una release estable. Cada una lleva su propia versión.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "android": {
+          "allOf": [{ "$ref": "manifest.schema.json#/$defs/android" }, { "$ref": "#/$defs/release" }],
+          "properties": { "assets": { "items": { "$ref": "#/$defs/publishedAsset" } } },
+          "unevaluatedProperties": false
+        },
+        "windows": { "$ref": "#/$defs/desktopPlatform" },
+        "macos": { "$ref": "#/$defs/desktopPlatform" },
+        "linux": { "$ref": "#/$defs/desktopPlatform" }
+      }
+    },
+    "desktopPlatform": {
+      "allOf": [{ "$ref": "manifest.schema.json#/$defs/desktop" }, { "$ref": "#/$defs/release" }],
+      "properties": { "assets": { "items": { "$ref": "#/$defs/publishedAsset" } } },
+      "unevaluatedProperties": false
+    },
+    "release": {
+      "description": "Datos de la release de la que sale esta plataforma.",
+      "type": "object",
+      "required": ["version", "tag", "date", "notes"],
+      "properties": {
+        "version": { "$ref": "manifest.schema.json#/$defs/semver" },
+        "tag": { "$ref": "manifest.schema.json#/$defs/tag" },
+        "date": { "$ref": "manifest.schema.json#/$defs/date" },
+        "notes": { "$ref": "manifest.schema.json#/$defs/notes" }
+      }
+    },
+    "publishedAsset": {
+      "$ref": "manifest.schema.json#/$defs/assetFields",
+      "required": ["url"],
+      "properties": {
+        "url": {
+          "description": "Descarga directa: https://github.com/<usuario>/apps/releases/download/<tag>/<archivo>",
+          "type": "string",
+          "pattern": "^https://github\\.com/[^/]+/[^/]+/releases/download/[^/]+/[^/]+$"
+        }
+      },
+      "unevaluatedProperties": false
+    }
+  }
+}

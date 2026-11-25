@@ -1,0 +1,19 @@
+{
+  "version": "0.14.0",
+  "notes": "Novedades de Melomango 0.14.0:\n\n- **Emisoras:** radio en directo, con las de tu zona primero. Busca emisoras, guarda las que te gusten y filtra por nacionales, autonómicas, locales e internacionales. Ya suenan también las emisoras HLS, como RNE Ràdio 4.\n- **Tus artistas:** pulsa Me gusta en la página de un artista, o haz clic derecho en su foto, y aparecerá en «Tus artistas», en la barra lateral.\n- **Menú de canción renovado:** las opciones van en el mismo orden que en el móvil, con Me gusta, «Ir a» cada artista y las playlists en un submenú.\n- **Aspecto más cuidado:** botones, menús, diálogos, avisos y estados de carga son iguales en toda la app, en claro y en oscuro. Las confirmaciones ya se ven como Melomango y no como un aviso de Windows.\n- **Mejor con el teclado:** todo lo que se pulsa muestra el foco, y los menús y diálogos se manejan con las flechas y Escape.\n- **Arreglos:** la app va más fluida mientras suena la música, importar de Spotify ya no falla entero por un archivo, y la cola muestra las carátulas a su tamaño. También hay muchos arreglos de estabilidad y seguridad.",
+  "pub_date": "2026-11-25T11:01:10Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSTktneStyeFc4bGhFaUVSQWg0MXZlWjZQQ21lUS9tS2JyWXJya1BEcVJUV25ZYm51OHhGZDNCVkhUQVEyODI5Y1Q5ZXdrUFhTNTJ6SEdUbFdvV01oUkpDMHExV0hZWnc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1NjA0NDY0CWZpbGU6TWVsb21hbmdvXzAuMTQuMF94NjQtc2V0dXAuZXhlCXZlcnNpb246MC4xNC4wCndnTXFWUFRtTFZxVnMrVGJMNCtYcmt3Z3BZNWp4UUNmd2puN1lLMmVjUXhVbVlhckNBV3NGRjBCWDZCaDRreUYzc3Jnc3A2bUx1MmhEbGlmRFVSZEJRPT0K",
+      "url": "https://github.com/fergaschas/apps/releases/download/melomango-v0.14.0/melomango-0.14.0-windows-x64.exe"
+    },
+    "windows-x86_64-nsis": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSTktneStyeFc4bGhFaUVSQWg0MXZlWjZQQ21lUS9tS2JyWXJya1BEcVJUV25ZYm51OHhGZDNCVkhUQVEyODI5Y1Q5ZXdrUFhTNTJ6SEdUbFdvV01oUkpDMHExV0hZWnc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1NjA0NDY0CWZpbGU6TWVsb21hbmdvXzAuMTQuMF94NjQtc2V0dXAuZXhlCXZlcnNpb246MC4xNC4wCndnTXFWUFRtTFZxVnMrVGJMNCtYcmt3Z3BZNWp4UUNmd2puN1lLMmVjUXhVbVlhckNBV3NGRjBCWDZCaDRreUYzc3Jnc3A2bUx1MmhEbGlmRFVSZEJRPT0K",
+      "url": "https://github.com/fergaschas/apps/releases/download/melomango-v0.14.0/melomango-0.14.0-windows-x64.exe"
+    },
+    "windows-x86_64-msi": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSTktneStyeFc4bGpaNldoY0NYcUZiS0VkNzJpbVlldmlJTWhEQmZOZmZKeHJ3S0hVb09zakZwYnBYbWxiNDVWdmVxWmdTcXhFb20wbFNCZnluendUZEtkc09Lak1yM0FzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1NjA0NDY0CWZpbGU6TWVsb21hbmdvXzAuMTQuMF94NjRfZXMtRVMubXNpCXZlcnNpb246MC4xNC4wClpzeVJ4dGlwWVJ5TkVTSWV6WXdiNytYSjVlalZlZ2oyM2VIakpyWnRuWC8rUzNaUkNTYlVlTklLVExsSC91RjMyaG1kRjQwMmNPa0VUVWhxQXdXZUJRPT0K",
+      "url": "https://github.com/fergaschas/apps/releases/download/melomango-v0.14.0/melomango-0.14.0-windows-x64.msi"
+    }
+  }
+}

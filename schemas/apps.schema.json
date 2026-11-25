@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fergaschas.github.io/apps/schemas/apps.schema.json",
+  "title": "apps.json",
+  "description": "Todas las apps del catálogo con su última versión estable por plataforma. Lo genera el workflow del repo apps; lo lee la web.",
+  "type": "object",
+  "required": ["schemaVersion", "generated", "apps"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "generated": { "type": "string", "format": "date-time" },
+    "apps": {
+      "type": "array",
+      "items": {
+        "$ref": "catalog.schema.json#/$defs/appInfo",
+        "required": ["platforms", "latest"],
+        "properties": {
+          "platforms": { "$ref": "latest.schema.json#/$defs/platforms" },
+          "latest": { "description": "Ruta de <app>/latest.json dentro de la web.", "type": "string", "pattern": "^[a-z0-9-]+/latest\\.json$" },
+          "tauri": { "description": "Ruta del JSON del actualizador de Tauri, si la app lo usa.", "type": "string", "pattern": "^[a-z0-9-]+/tauri\\.json$" }
+        },
+        "unevaluatedProperties": false
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fergaschas.github.io/apps/schemas/catalog.schema.json",
+  "title": "catalog.json",
+  "description": "Configuración del catálogo, editada a mano en el repo apps: qué apps se muestran y sus datos fijos. Las versiones salen de las releases.",
+  "type": "object",
+  "required": ["schemaVersion", "repo", "siteUrl", "apps"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "repo": { "description": "Repo público que aloja las releases: <usuario>/<repo>.", "type": "string", "pattern": "^[A-Za-z0-9-]+/[A-Za-z0-9._-]+$" },
+    "siteUrl": { "description": "URL de GitHub Pages, sin barra final.", "type": "string", "pattern": "^https://[^ ]+[^/]$" },
+    "apps": {
+      "description": "En el orden en que salen en la web. Las releases de apps que no estén aquí se ignoran.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/app" }
+    }
+  },
+  "$defs": {
+    "app": {
+      "$ref": "#/$defs/appInfo",
+      "required": ["platforms"],
+      "properties": {
+        "platforms": {
+          "description": "Plataformas que se publican, en el orden en que se muestran.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["android", "windows", "macos", "linux"] }
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "appInfo": {
+      "description": "Datos fijos de una app, comunes a catalog.json y apps.json.",
+      "type": "object",
+      "required": ["id", "name", "description", "icon"],
+      "properties": {
+        "id": { "$ref": "manifest.schema.json#/$defs/appId" },
+        "name": { "description": "Nombre visible.", "type": "string", "minLength": 1 },
+        "description": { "description": "Una o dos frases para la tarjeta de la web.", "type": "string", "minLength": 1, "maxLength": 300 },
+        "icon": { "description": "Ruta del icono dentro de la web (relativa a siteUrl).", "type": "string", "pattern": "^[a-z0-9/._-]+\\.(svg|png|webp)$" },
+        "homepage": { "description": "Página del proyecto, si es pública.", "type": "string", "format": "uri" }
+      }
+    }
+  }
+}

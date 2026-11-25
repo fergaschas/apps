@@ -1,0 +1,67 @@
+{
+  "$schema": "https://fergaschas.github.io/apps/schemas/apps.schema.json",
+  "schemaVersion": 1,
+  "generated": "2026-11-25T12:00:00Z",
+  "apps": [
+    {
+      "id": "melomango",
+      "name": "Melomango",
+      "description": "Reproductor de música en streaming gratuito: suena desde YouTube, con playlists, Me gusta, letras sincronizadas, emisoras de radio y plugins.",
+      "icon": "icons/melomango.svg",
+      "homepage": "https://github.com/fergaschas/melomango",
+      "platforms": {
+        "android": {
+          "version": "0.1.0",
+          "tag": "melomango-android-v0.1.0",
+          "date": "2026-11-25T12:00:00Z",
+          "versionCode": 1,
+          "minSdk": 26,
+          "notes": "Primera versión de Melomango para Android.",
+          "assets": [
+            {
+              "file": "melomango-0.1.0-android.apk",
+              "arch": "universal",
+              "type": "apk",
+              "size": 1,
+              "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "url": "https://github.com/fergaschas/apps/releases/download/melomango-android-v0.1.0/melomango-0.1.0-android.apk"
+            }
+          ]
+        },
+        "windows": {
+          "version": "0.14.0",
+          "tag": "melomango-v0.14.0",
+          "date": "2026-11-25T11:01:10Z",
+          "minOsVersion": "10",
+          "notes": "Novedades de Melomango 0.14.0:\n\n- **Emisoras:** radio en directo, con las de tu zona primero. Busca emisoras, guarda las que te gusten y filtra por nacionales, autonómicas, locales e internacionales. Ya suenan también las emisoras HLS, como RNE Ràdio 4.\n- **Tus artistas:** pulsa Me gusta en la página de un artista, o haz clic derecho en su foto, y aparecerá en «Tus artistas», en la barra lateral.\n- **Menú de canción renovado:** las opciones van en el mismo orden que en el móvil, con Me gusta, «Ir a» cada artista y las playlists en un submenú.\n- **Aspecto más cuidado:** botones, menús, diálogos, avisos y estados de carga son iguales en toda la app, en claro y en oscuro. Las confirmaciones ya se ven como Melomango y no como un aviso de Windows.\n- **Mejor con el teclado:** todo lo que se pulsa muestra el foco, y los menús y diálogos se manejan con las flechas y Escape.\n- **Arreglos:** la app va más fluida mientras suena la música, importar de Spotify ya no falla entero por un archivo, y la cola muestra las carátulas a su tamaño. También hay muchos arreglos de estabilidad y seguridad.",
+          "assets": [
+            {
+              "file": "melomango-0.14.0-windows-x64.exe",
+              "arch": "x64",
+              "type": "exe",
+              "size": 4125492,
+              "sha256": "d29a120de75981876c8aea52727fde65b649dcd28e241b71a554a542cc67317b",
+              "updater": {
+                "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSTktneStyeFc4bGhFaUVSQWg0MXZlWjZQQ21lUS9tS2JyWXJya1BEcVJUV25ZYm51OHhGZDNCVkhUQVEyODI5Y1Q5ZXdrUFhTNTJ6SEdUbFdvV01oUkpDMHExV0hZWnc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1NjA0NDY0CWZpbGU6TWVsb21hbmdvXzAuMTQuMF94NjQtc2V0dXAuZXhlCXZlcnNpb246MC4xNC4wCndnTXFWUFRtTFZxVnMrVGJMNCtYcmt3Z3BZNWp4UUNmd2puN1lLMmVjUXhVbVlhckNBV3NGRjBCWDZCaDRreUYzc3Jnc3A2bUx1MmhEbGlmRFVSZEJRPT0K"
+              },
+              "url": "https://github.com/fergaschas/apps/releases/download/melomango-v0.14.0/melomango-0.14.0-windows-x64.exe"
+            },
+            {
+              "file": "melomango-0.14.0-windows-x64.msi",
+              "arch": "x64",
+              "type": "msi",
+              "size": 6934528,
+              "sha256": "936fd5dc7e2953cd065017596b1ca9311a41e4def8f90459cc82bd46913836c1",
+              "updater": {
+                "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSTktneStyeFc4bGpaNldoY0NYcUZiS0VkNzJpbVlldmlJTWhEQmZOZmZKeHJ3S0hVb09zakZwYnBYbWxiNDVWdmVxWmdTcXhFb20wbFNCZnluendUZEtkc09Lak1yM0FzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk1NjA0NDY0CWZpbGU6TWVsb21hbmdvXzAuMTQuMF94NjRfZXMtRVMubXNpCXZlcnNpb246MC4xNC4wClpzeVJ4dGlwWVJ5TkVTSWV6WXdiNytYSjVlalZlZ2oyM2VIakpyWnRuWC8rUzNaUkNTYlVlTklLVExsSC91RjMyaG1kRjQwMmNPa0VUVWhxQXdXZUJRPT0K"
+              },
+              "url": "https://github.com/fergaschas/apps/releases/download/melomango-v0.14.0/melomango-0.14.0-windows-x64.msi"
+            }
+          ]
+        }
+      },
+      "latest": "melomango/latest.json",
+      "tauri": "melomango/tauri.json"
+    }
+  ]
+}

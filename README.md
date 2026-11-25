@@ -30,15 +30,20 @@ Un mismo repo aloja las releases de todas las apps, así que tags, títulos y ar
 
 | Qué | Formato | Ejemplo |
 |---|---|---|
-| Tag | `<app>-v<versión>` | `melomango-v1.4.0` |
-| Título de la release | `<App> <versión>` | `Melomango 1.4.0` |
-| Archivo | `<app>-<versión>-<plataforma>.<ext>` | `melomango-1.4.0-android.apk` |
+| Tag | `<app>-v<versión>` | `melomango-v0.14.0` |
+| Tag de una plataforma que se versiona aparte | `<app>-<plataforma>-v<versión>` | `melomango-android-v0.1.0` |
+| Título de la release | `<App> <versión>` | `Melomango 0.14.0` |
+| Archivo | `<app>-<versión>-<plataforma>-<arch>.<ext>` | `melomango-0.14.0-windows-x64.exe` |
+| Archivo de Android | `<app>-<versión>-android.apk` | `melomango-0.1.0-android.apk` |
 
-Plataformas: `android`, `windows-x64`, `macos-arm64`, `macos-x64`, `linux-x64`.
+Plataformas: `android`, `windows`, `macos`, `linux`. Arquitecturas: `x64`, `arm64`, `universal`.
 
 - `<app>` en minúsculas y con guiones (`fuera-de-mi-finca`). La versión sigue [SemVer](https://semver.org/lang/es/).
+- Cada plataforma puede llevar su propia versión: el catálogo guarda la última de cada una.
 - Cada release incluye además un `manifest.json` con los metadatos de esa versión.
 - Las betas se publican como **pre-release** y con sufijo SemVer (`melomango-v1.5.0-beta.1`).
+
+El formato de `manifest.json`, `apps.json`, `<app>/latest.json` y `<app>/tauri.json` está en [docs/catalogo.md](docs/catalogo.md), con sus esquemas en [`schemas/`](schemas) y ejemplos reales en [`examples/`](examples). Para validarlo: `npm install && npm test`.
 
 ## Descargas
 

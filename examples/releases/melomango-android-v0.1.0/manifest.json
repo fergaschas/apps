@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../schemas/manifest.schema.json",
+  "schemaVersion": 1,
+  "app": "melomango",
+  "version": "0.1.0",
+  "tag": "melomango-android-v0.1.0",
+  "prerelease": false,
+  "date": "2026-11-25T12:00:00Z",
+  "notes": "Primera versión de Melomango para Android.",
+  "platforms": {
+    "android": {
+      "versionCode": 1,
+      "minSdk": 26,
+      "assets": [
+        {
+          "file": "melomango-0.1.0-android.apk",
+          "arch": "universal",
+          "type": "apk",
+          "size": 1,
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ]
+    }
+  }
+}

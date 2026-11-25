@@ -1,0 +1,18 @@
+{
+  "name": "apps",
+  "private": true,
+  "description": "Web y catálogo de descargas de mis apps",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "catalog": "node scripts/build-catalog.mjs",
+    "examples": "node scripts/build-catalog.mjs --manifests examples/releases --out examples/site --now 2026-11-25T12:00:00Z",
+    "test": "node --test && node scripts/build-catalog.mjs --manifests examples/releases --out examples/site --now 2026-11-25T12:00:00Z --check"
+  },
+  "devDependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  }
+}

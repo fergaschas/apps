@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fergaschas.github.io/apps/schemas/tauri.schema.json",
+  "title": "<app>/tauri.json",
+  "description": "Formato estático que exige tauri-plugin-updater v2 (https://v2.tauri.app/plugin/updater/). Lo genera el workflow del repo apps a partir de los manifest.json; no se edita a mano.",
+  "type": "object",
+  "required": ["version", "platforms"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "$ref": "manifest.schema.json#/$defs/semver" },
+    "notes": { "type": "string" },
+    "pub_date": { "type": "string", "format": "date-time" },
+    "platforms": {
+      "description": "Claves <os>-<arch> y <os>-<arch>-<instalador>. El actualizador busca primero la específica de su instalador y después la genérica.",
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "pattern": "^(windows|darwin|linux)-(x86_64|aarch64)(-(nsis|msi|app|appimage|deb))?$" },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["signature", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "signature": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "pattern": "^https://" }
+        }
+      }
+    }
+  }
+}
