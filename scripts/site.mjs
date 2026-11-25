@@ -86,6 +86,7 @@ function renderPrimary(app, platform, data) {
           <span>Descargar para ${PLATFORM_LABEL[platform]}</span>
           <small>${esc(app.name)} ${esc(data.version)} · ${formatSize(asset.size)}</small>
         </a>
+        <a class="help-link" href="ayuda.html#${platform}">¿Cómo se instala en ${PLATFORM_LABEL[platform]}?</a>
       </div>`;
 }
 
@@ -98,6 +99,7 @@ function renderAsset(asset, platform) {
                 <summary>SHA-256</summary>
                 <code>${esc(asset.sha256)}</code>
                 <button type="button" class="copy" data-copy="${esc(asset.sha256)}" hidden>Copiar</button>
+                <a class="help-link" href="ayuda.html#sha256">Cómo comprobarlo</a>
               </details>
               ${
                 platform === "android"
@@ -125,6 +127,7 @@ function renderPlatform(platform, data) {
           <p class="meta"><time datetime="${esc(data.date)}">${formatDate(data.date)}</time>${req ? ` · ${esc(req)}` : ""}</p>
           <ul class="files">${downloadable(data).map((a) => renderAsset(a, platform)).join("")}
           </ul>
+          <a class="help-link" href="ayuda.html#${platform}">Cómo instalarlo</a>
           <details class="notes">
             <summary>Novedades de la ${esc(data.version)}</summary>
             ${renderNotes(data.notes)}
@@ -182,7 +185,7 @@ ${apps.apps.map((app) => renderApp(app, wanted[app.id] ?? [])).join("\n")}
   </main>
   <footer>
     <p>El código de estas apps está en repositorios privados; aquí solo se publican las versiones. Comprueba el SHA-256 si descargas desde otro sitio.</p>
-    <p><a href="${repoUrl}">Repositorio</a> · <a href="apps.json">apps.json</a> · Actualizada el <time datetime="${esc(apps.generated)}">${formatDate(apps.generated)}</time></p>
+    <p><a href="ayuda.html">Cómo instalar</a> · <a href="${repoUrl}">Repositorio</a> · <a href="apps.json">apps.json</a> · Actualizada el <time datetime="${esc(apps.generated)}">${formatDate(apps.generated)}</time></p>
   </footer>
 </body>
 </html>

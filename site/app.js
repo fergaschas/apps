@@ -26,6 +26,9 @@ for (const app of document.querySelectorAll(".app")) {
   }
 }
 
+// Página de ayuda: destaca la sección del sistema del visitante.
+if (os) document.querySelector(`.help-section[data-os="${os}"]`)?.classList.add("current");
+
 for (const button of document.querySelectorAll(".copy")) {
   if (!navigator.clipboard) continue;
   button.hidden = false;

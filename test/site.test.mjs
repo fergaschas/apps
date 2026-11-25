@@ -24,6 +24,16 @@ test("la página lista la app con sus descargas, el SHA-256 y el QR del APK", ()
   assert.match(html, /<strong>Emisoras:<\/strong>/);
 });
 
+test("los enlaces a la ayuda apuntan a secciones que existen", () => {
+  const apps = buildCatalog(config, [desktop, android], NOW).files["apps.json"];
+  const html = renderPage(apps, config);
+  const help = fs.readFileSync(new URL("../site/ayuda.html", import.meta.url), "utf8");
+  const anchors = [...html.matchAll(/href="ayuda\.html#([a-z0-9-]+)"/g)].map((m) => m[1]);
+  assert.ok(anchors.includes("windows") && anchors.includes("android") && anchors.includes("sha256"));
+  for (const id of new Set(anchors)) assert.match(help, new RegExp(`id="${id}"`), `falta #${id} en ayuda.html`);
+  for (const os of ["android", "windows", "macos", "linux"]) assert.match(help, new RegExp(`id="${os}" data-os="${os}"`));
+});
+
 test("una plataforma sin versión sale como Próximamente", () => {
   const apps = buildCatalog(config, [desktop], NOW).files["apps.json"];
   const html = renderPage(apps, config);

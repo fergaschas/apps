@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light dark">
+  <title>Cómo instalar</title>
+  <meta name="description" content="Cómo instalar mis apps en Android, Windows, macOS y Linux, y cómo comprobar el SHA-256.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="help">
+    <header class="site-head">
+      <p class="back"><a href="./">← Mis apps</a></p>
+      <h1>Cómo instalar</h1>
+      <p>Mis apps no vienen de Google Play, de la Microsoft Store ni de la App Store, y los instaladores no llevan una firma comercial de Microsoft ni de Apple. Por eso tu sistema avisa la primera vez. Es normal: aquí tienes qué pulsar en cada caso.</p>
+      <nav class="help-nav" aria-label="Sistemas">
+        <a href="#android">Android</a>
+        <a href="#windows">Windows</a>
+        <a href="#macos">macOS</a>
+        <a href="#linux">Linux</a>
+        <a href="#sha256">Comprobar el SHA-256</a>
+      </nav>
+    </header>
+
+    <section class="help-section" id="android" data-os="android">
+      <h2>Android</h2>
+      <ol>
+        <li>Pulsa <strong>Descargar para Android</strong>. Si el navegador avisa de que el archivo puede ser dañino, elige <strong>Descargar de todas formas</strong>.</li>
+        <li>Abre el archivo <code>.apk</code> desde la notificación de descarga o desde la app <em>Archivos</em>.</li>
+        <li>La primera vez, Android dice que por seguridad no puede instalar apps de esa fuente. Pulsa <strong>Ajustes</strong>, activa <strong>Permitir de esta fuente</strong> y vuelve atrás. Solo se hace una vez por navegador. Lo puedes desactivar después en <em>Ajustes → Aplicaciones → Acceso especial de aplicaciones → Instalar aplicaciones desconocidas</em>.</li>
+        <li>Pulsa <strong>Instalar</strong>.</li>
+      </ol>
+      <h3>Si Play Protect avisa</h3>
+      <p>Play Protect no conoce las apps que no están en Google Play y puede decir que la app es desconocida o que la ha bloqueado. Pulsa <strong>Más detalles</strong> y después <strong>Instalar de todas formas</strong>. Si te ofrece enviarla para analizarla, puedes aceptar o no: no cambia nada.</p>
+      <h3>Actualizar</h3>
+      <p>Las apps avisan solas cuando hay versión nueva. Si instalas a mano una versión nueva encima de la que tienes, conservas tus datos. Si Android dice que la app <strong>entra en conflicto con un paquete existente</strong>, la que tienes se firmó con otra clave (por ejemplo, una versión de desarrollo): desinstálala primero.</p>
+      <p class="note">Los textos exactos cambian un poco según el fabricante y la versión de Android.</p>
+    </section>
+
+    <section class="help-section" id="windows" data-os="windows">
+      <h2>Windows</h2>
+      <ol>
+        <li>Pulsa <strong>Descargar para Windows</strong>. Si Edge o Chrome dicen que el archivo <em>no se descarga habitualmente</em>, abre el menú del aviso (<strong>…</strong>), elige <strong>Conservar</strong> y después <strong>Conservar de todos modos</strong>.</li>
+        <li>Abre el instalador <code>.exe</code>.</li>
+        <li>Si aparece <strong>Windows protegió tu PC</strong> (SmartScreen), pulsa <strong>Más información</strong> y después <strong>Ejecutar de todas formas</strong>.</li>
+        <li>Sigue el instalador. Normalmente el <code>.exe</code> instala solo para tu usuario, sin pedir permisos de administrador.</li>
+      </ol>
+      <h3>¿.exe o .msi?</h3>
+      <p>Usa el <code>.exe</code>. El <code>.msi</code> es para instalaciones gestionadas o para todos los usuarios del equipo, y pide permisos de administrador.</p>
+      <h3>Si Windows la bloquea sin opción de ejecutarla</h3>
+      <p>En Windows 11, el <strong>Control inteligente de aplicaciones</strong> bloquea los programas sin una firma comercial y no ofrece <em>Ejecutar de todas formas</em>. Se configura en <em>Seguridad de Windows → Control de aplicaciones y del explorador → Configuración de Control inteligente de aplicaciones</em>. Desactivarlo afecta a todos los programas, no solo a este: piénsalo antes.</p>
+    </section>
+
+    <section class="help-section" id="macos" data-os="macos">
+      <h2>macOS</h2>
+      <ol>
+        <li>Descarga el <code>.dmg</code>, ábrelo y arrastra la app a <strong>Aplicaciones</strong>.</li>
+        <li>Abre la app. La primera vez, macOS (Gatekeeper) dice que no puede comprobar que esté libre de malware. Pulsa <strong>OK</strong> o <strong>Listo</strong>.</li>
+        <li>Ve a <strong>Ajustes del Sistema → Privacidad y seguridad</strong>, baja hasta <em>Seguridad</em> y pulsa <strong>Abrir igualmente</strong> junto al nombre de la app. Confirma con tu contraseña o Touch ID.</li>
+        <li>Vuelve a abrirla y pulsa <strong>Abrir</strong>. A partir de aquí se abre sin avisos.</li>
+      </ol>
+      <p class="note">En macOS 14 (Sonoma) y anteriores también vale <strong>clic derecho (o Control + clic) → Abrir</strong> sobre la app. Desde macOS 15 (Sequoia) solo funciona el paso de <em>Privacidad y seguridad</em>.</p>
+      <h3>Si dice que la app está dañada</h3>
+      <p>Si macOS dice que la app <strong>está dañada y no se puede abrir</strong>, es la marca de cuarentena de las descargas. Quítala desde la Terminal y vuelve a abrirla:</p>
+      <pre><code>xattr -dr com.apple.quarantine "/Applications/Nombre de la app.app"</code></pre>
+    </section>
+
+    <section class="help-section" id="linux" data-os="linux">
+      <h2>Linux</h2>
+      <h3>AppImage (cualquier distribución)</h3>
+      <p>Dale permiso de ejecución y ábrelo:</p>
+      <pre><code>chmod +x nombre-de-la-app-*.AppImage
+./nombre-de-la-app-*.AppImage</code></pre>
+      <p>En el gestor de archivos también vale: <em>Propiedades → Permisos → Permitir ejecutar el archivo como un programa</em>.</p>
+      <p>Si no arranca y menciona FUSE o <code>libfuse.so.2</code>, instala FUSE 2. En Ubuntu 24.04 o posterior es <code>sudo apt install libfuse2t64</code>, y en versiones anteriores, <code>sudo apt install libfuse2</code>.</p>
+      <h3>.deb (Debian, Ubuntu, Linux Mint…)</h3>
+      <pre><code>sudo apt install ./nombre-de-la-app_*.deb</code></pre>
+      <p>Con <code>apt</code> se instalan también las dependencias que falten. Para desinstalarla, usa <code>sudo apt remove</code> con el nombre del paquete.</p>
+    </section>
+
+    <section class="help-section" id="sha256">
+      <h2>Comprobar el SHA-256</h2>
+      <p>Cada descarga muestra su <strong>SHA-256</strong>, una huella del archivo. Si calculas la huella del archivo que has descargado y coincide con la de la web, el archivo está completo y es exactamente el publicado. Es útil sobre todo si lo has descargado desde otro sitio o te lo han pasado.</p>
+      <dl class="hash-commands">
+        <dt>Windows (PowerShell)</dt>
+        <dd><pre><code>Get-FileHash .\nombre-del-archivo -Algorithm SHA256</code></pre></dd>
+        <dt>macOS (Terminal)</dt>
+        <dd><pre><code>shasum -a 256 nombre-del-archivo</code></pre></dd>
+        <dt>Linux</dt>
+        <dd><pre><code>sha256sum nombre-del-archivo</code></pre></dd>
+        <dt>Android</dt>
+        <dd><p>Android no trae una herramienta para esto. Si descargas desde esta web no hace falta: la descarga llega cifrada desde GitHub, y las apps comprueban el SHA-256 solas cuando se actualizan.</p></dd>
+      </dl>
+      <p>PowerShell muestra la huella en mayúsculas y la web en minúsculas: da igual, se comparan las letras y los números.</p>
+    </section>
+  </main>
+  <footer>
+    <p><a href="./">← Volver a las descargas</a></p>
+  </footer>
+</body>
+</html>
