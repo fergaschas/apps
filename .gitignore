@@ -7,3 +7,5 @@ Thumbs.db
 *.AppImage
 *.deb
 node_modules/
+_site/
+manifests/

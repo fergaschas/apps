@@ -14,7 +14,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
-import { buildCatalog, validateCatalogFiles, validateManifest, validateSchema } from "./catalog.mjs";
+import { buildCatalog, loadManifests, validateCatalogFiles, validateSchema } from "./catalog.mjs";
 
 const { values: args } = parseArgs({
   options: {
@@ -30,33 +30,11 @@ if (!args.manifests || !args.out) {
   process.exit(2);
 }
 
-const readJson = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
 const toJson = (data) => JSON.stringify(data, null, 2) + "\n";
 
-function findManifests(dir) {
-  return fs
-    .readdirSync(dir, { recursive: true })
-    .filter((f) => path.basename(f) === "manifest.json")
-    .map((f) => path.join(dir, f))
-    .sort();
-}
-
-const errors = [];
-
-const config = readJson(args.config);
-errors.push(...validateSchema("catalog", config).map((e) => `${args.config}: ${e}`));
-
-const manifests = [];
-const tags = new Map();
-for (const file of findManifests(args.manifests)) {
-  const manifest = readJson(file);
-  const problems = validateManifest(manifest);
-  errors.push(...problems.map((e) => `${file}: ${e}`));
-  if (problems.length) continue;
-  if (tags.has(manifest.tag)) errors.push(`${file}: el tag ${manifest.tag} ya está en ${tags.get(manifest.tag)}`);
-  tags.set(manifest.tag, file);
-  manifests.push(manifest);
-}
+const config = JSON.parse(fs.readFileSync(args.config, "utf8"));
+const { manifests, errors } = loadManifests(args.manifests);
+errors.unshift(...validateSchema("catalog", config).map((e) => `${args.config}: ${e}`));
 
 if (errors.length) {
   console.error(errors.join("\n"));

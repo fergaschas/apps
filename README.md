@@ -57,6 +57,20 @@ https://github.com/fergaschas/apps/releases/download/<tag>/<archivo>
 
 Límite de GitHub: 2 GB por archivo.
 
+## La web
+
+El workflow [`pages.yml`](.github/workflows/pages.yml) se lanza al publicar, editar o borrar una release, al hacer push a `main` y a mano. Descarga los `manifest.json` de las releases ([`fetch-manifests.mjs`](scripts/fetch-manifests.mjs)) y genera el catálogo y la web ([`build-site.mjs`](scripts/build-site.mjs)): `index.html` ya renderizado, los JSON del catálogo, los QR de los APK y los esquemas. Después la despliega en Pages.
+
+Si una release tiene un manifest inválido, el workflow avisa y la deja fuera, sin tumbar la web.
+
+Para verla en local con los ejemplos:
+
+```sh
+npm install
+npm run site                  # genera _site/ a partir de examples/releases
+npx serve _site               # o cualquier servidor estático
+```
+
 ## Privacidad
 
 Todo lo que se publica aquí (notas de versión, nombres de archivo, manifests) es público. Nada de datos privados.

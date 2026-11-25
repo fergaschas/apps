@@ -233,6 +233,42 @@ export function buildCatalog(config, manifests, { now = new Date() } = {}) {
   return { files: Object.fromEntries(Object.entries(files).sort(([a], [b]) => a.localeCompare(b))), warnings };
 }
 
+/**
+ * Lee y valida todos los manifest.json de una carpeta (en cualquier subcarpeta).
+ * Con skipInvalid, los inválidos pasan a warnings en vez de a errors, para que una
+ * release mal hecha no impida publicar la web.
+ */
+export function loadManifests(dir, { skipInvalid = false } = {}) {
+  const manifests = [];
+  const errors = [];
+  const warnings = [];
+  const tags = new Map();
+  const files = fs
+    .readdirSync(dir, { recursive: true })
+    .filter((f) => path.basename(f) === "manifest.json")
+    .map((f) => path.join(dir, f))
+    .sort();
+
+  for (const file of files) {
+    let problems;
+    let manifest;
+    try {
+      manifest = JSON.parse(fs.readFileSync(file, "utf8"));
+      problems = validateManifest(manifest);
+    } catch (e) {
+      problems = [`no es JSON válido: ${e.message}`];
+    }
+    if (!problems.length && tags.has(manifest.tag)) problems = [`el tag ${manifest.tag} ya está en ${tags.get(manifest.tag)}`];
+    if (problems.length) {
+      (skipInvalid ? warnings : errors).push(...problems.map((e) => `${file}: ${e}${skipInvalid ? " (se ignora)" : ""}`));
+      continue;
+    }
+    tags.set(manifest.tag, file);
+    manifests.push(manifest);
+  }
+  return { manifests, errors, warnings };
+}
+
 /** Valida los archivos generados por buildCatalog contra sus esquemas. */
 export function validateCatalogFiles(files) {
   const errors = [];

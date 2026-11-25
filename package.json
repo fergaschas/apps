@@ -9,10 +9,14 @@
   "scripts": {
     "catalog": "node scripts/build-catalog.mjs",
     "examples": "node scripts/build-catalog.mjs --manifests examples/releases --out examples/site --now 2026-11-25T12:00:00Z",
-    "test": "node --test && node scripts/build-catalog.mjs --manifests examples/releases --out examples/site --now 2026-11-25T12:00:00Z --check"
+    "test": "node --test && node scripts/build-catalog.mjs --manifests examples/releases --out examples/site --now 2026-11-25T12:00:00Z --check",
+    "site": "node scripts/build-site.mjs --manifests examples/releases --out _site"
   },
   "devDependencies": {
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
   }
 }
