@@ -12,7 +12,7 @@ Hace falta un token propio, y no el `GITHUB_TOKEN` de Actions, por dos motivos:
 1. Abre [Fine-grained tokens → Generate new token](https://github.com/settings/personal-access-tokens/new?name=APPS_REPO_TOKEN&description=CI%20de%20mis%20apps%3A%20publicar%20releases%20en%20fergaschas%2Fapps&target_name=fergaschas&expires_in=366&contents=write). El enlace rellena casi todo; comprueba cada campo:
    - **Token name:** `APPS_REPO_TOKEN`
    - **Resource owner:** `fergaschas`
-   - **Expiration:** 366 días (el máximo)
+   - **Expiration:** elige *Custom* y pon la fecha de dentro de un año (366 días como máximo). El enlace no la rellena: si no la cambias, se queda en 30 días.
    - **Repository access:** *Only select repositories* → **solo `apps`**. Esto hay que elegirlo a mano.
    - **Repository permissions:** **Contents: Read and write**. Se añade solo *Metadata: Read-only*, que es obligatorio. **Nada más.**
 2. *Generate token* y copia el valor. GitHub no vuelve a mostrarlo.
@@ -60,7 +60,7 @@ Repos que lo tienen:
 | `melomango` | 2026-11-25 |
 | `melomango-mobile` | 2026-11-25 |
 
-Token actual creado el 2026-11-25. **Caduca el 2026-12-25** (30 días): hay que rotarlo antes. El siguiente, mejor con 366 días.
+Token actual creado el 2026-11-25 a las 17:28 UTC. **Caduca el 2026-12-25** (30 días): recordatorio el 2026-12-11 para rotarlo. El siguiente, mejor con 366 días.
 
 En los repos públicos (`melomango`), los secrets no llegan a los workflows de pull requests desde forks. Aun así, el workflow de publicación solo debe correr con tags `v*` (KAN-200).
 
