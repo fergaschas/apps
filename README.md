@@ -57,6 +57,25 @@ https://github.com/fergaschas/apps/releases/download/<tag>/<archivo>
 
 Límite de GitHub: 2 GB por archivo.
 
+## Publicar una app desde su CI
+
+Cada app publica con la action [`publish`](publish/action.yml) y el secret `APPS_REPO_TOKEN` ([docs/token-ci.md](docs/token-ci.md)). Recibe los archivos ya compilados, los renombra según la convención, calcula tamaño y SHA-256, mete las firmas `.sig` de Tauri, genera y valida el `manifest.json` y crea la release como borrador para publicarla al final:
+
+```yaml
+- uses: fergaschas/apps/publish@main
+  with:
+    token: ${{ secrets.APPS_REPO_TOKEN }}
+    app: melomango                 # id de catalog.json
+    version: 0.15.0
+    notes-file: notas.md
+    min-os: windows=10
+    assets: |                      # "<plataforma> <arch> <ruta>", uno por línea
+      windows x64 src-tauri/target/release/bundle/nsis/Melomango_0.15.0_x64-setup.exe
+      windows x64 src-tauri/target/release/bundle/msi/Melomango_0.15.0_x64_es-ES.msi
+```
+
+Para Android hacen falta además `tag: <app>-android-v<versión>`, `version-code` y `min-sdk`. Ejemplos completos: `publicar.yml` en `melomango` y `melomango-mobile`. Para probar sin publicar: `dry-run: true`, o en local `node scripts/publish-release.mjs … --dry-run`.
+
 ## La web
 
 El workflow [`pages.yml`](.github/workflows/pages.yml) se lanza al hacer push a `main`, a mano y al publicar, editar o borrar una release. Para las releases pasa por [`release.yml`](.github/workflows/release.yml), que lo lanza sobre `main`: así siempre corre la versión actual, sea cual sea el commit del tag. Descarga los `manifest.json` de las releases ([`fetch-manifests.mjs`](scripts/fetch-manifests.mjs)) y genera el catálogo y la web ([`build-site.mjs`](scripts/build-site.mjs)): `index.html` ya renderizado, los JSON del catálogo, los QR de los APK y los esquemas. Después la despliega en Pages.
