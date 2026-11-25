@@ -1,16 +1,15 @@
 # Regenera el catálogo y la web, y los despliega en GitHub Pages.
 #
-# Se lanza al publicar, editar o borrar una release, al hacer push a main y a mano.
-# Las releases que crea la CI de las apps con su token de grano fino (KAN-197) sí
-# lanzan este workflow; las creadas con el GITHUB_TOKEN de otro workflow, no.
+# Se lanza al hacer push a main, a mano y, a través de release.yml, al publicar,
+# editar o borrar una release. Las releases que crea la CI de las apps con su token
+# de grano fino (KAN-197) sí lanzan release.yml; las creadas con el GITHUB_TOKEN de
+# otro workflow, no.
 
 name: Web y catálogo
 
 on:
   push:
     branches: [main]
-  release:
-    types: [published, unpublished, edited, deleted]
   workflow_dispatch:
 
 permissions:
@@ -28,10 +27,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Siempre main: en el evento release, el ref es el tag, que puede apuntar a un commit viejo.
       - uses: actions/checkout@v7
-        with:
-          ref: main
 
       - uses: actions/setup-node@v7
         with:

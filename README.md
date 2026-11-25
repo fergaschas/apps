@@ -59,7 +59,7 @@ Límite de GitHub: 2 GB por archivo.
 
 ## La web
 
-El workflow [`pages.yml`](.github/workflows/pages.yml) se lanza al publicar, editar o borrar una release, al hacer push a `main` y a mano. Descarga los `manifest.json` de las releases ([`fetch-manifests.mjs`](scripts/fetch-manifests.mjs)) y genera el catálogo y la web ([`build-site.mjs`](scripts/build-site.mjs)): `index.html` ya renderizado, los JSON del catálogo, los QR de los APK y los esquemas. Después la despliega en Pages.
+El workflow [`pages.yml`](.github/workflows/pages.yml) se lanza al hacer push a `main`, a mano y al publicar, editar o borrar una release. Para las releases pasa por [`release.yml`](.github/workflows/release.yml), que lo lanza sobre `main`: así siempre corre la versión actual, sea cual sea el commit del tag. Descarga los `manifest.json` de las releases ([`fetch-manifests.mjs`](scripts/fetch-manifests.mjs)) y genera el catálogo y la web ([`build-site.mjs`](scripts/build-site.mjs)): `index.html` ya renderizado, los JSON del catálogo, los QR de los APK y los esquemas. Después la despliega en Pages.
 
 Si una release tiene un manifest inválido, el workflow avisa y la deja fuera, sin tumbar la web.
 
