@@ -6,7 +6,7 @@
     {
       "id": "melomango",
       "name": "Melomango",
-      "description": "Reproductor de música en streaming gratuito: suena desde YouTube, con playlists, Me gusta, letras sincronizadas, emisoras de radio y plugins.",
+      "description": "Reproductor de música en streaming gratuito: suena desde YouTube, con playlists, Me gusta, letras sincronizadas, emisoras de radio e importación de Spotify.",
       "icon": "icons/melomango.svg",
       "platforms": {
         "android": {
