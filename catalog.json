@@ -9,7 +9,6 @@
       "name": "Melomango",
       "description": "Reproductor de música en streaming gratuito: suena desde YouTube, con playlists, Me gusta, letras sincronizadas, emisoras de radio y plugins.",
       "icon": "icons/melomango.svg",
-      "homepage": "https://github.com/fergaschas/melomango",
       "platforms": ["android", "windows"]
     }
   ]
